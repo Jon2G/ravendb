@@ -18,7 +18,7 @@ namespace Sparrow.Utils
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGet(Type type, out T result)
         {
-            int typeHash = type.GetHashCode();
+            int typeHash = Math.Abs(type.GetHashCode());
 
             // We get the data and after that we always work from there to avoid
             // harmful race conditions.
@@ -62,7 +62,7 @@ namespace Sparrow.Utils
 
         public void Put(Type type, T value)
         {
-            int typeHash = type.GetHashCode();
+            int typeHash = Math.Abs(type.GetHashCode());
             int bucket = typeHash % _size;
 
             // The idea is that this TypeCache<T> is thread safe. It is better to lose some Put
